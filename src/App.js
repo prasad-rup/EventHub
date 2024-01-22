@@ -6,6 +6,8 @@ import Home from './components/Home';
 import Explore from './components/Explore';
 import Profile from './components/Profile';
 import NavBar from './components/NavBar';
+import EventRegistrationPage from './components/RegistrationPage';
+
 import './App.css';
 
 const App = () => {
@@ -24,6 +26,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/registration/:eventId" element={<EventRegistrationPage />} />
           </Routes>
         </main>
       </div>

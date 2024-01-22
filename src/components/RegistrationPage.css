@@ -1,0 +1,72 @@
+.registration-page-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .event-details-container {
+    margin-bottom: 20px;
+  }
+  
+  .event-image {
+    margin-top: 16px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .event-name {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  
+  .event-city {
+    font-style: italic;
+    margin: 5px 0;
+  }
+  
+  .event-description {
+    margin-bottom: 15px;
+  }
+  
+  .register-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .registered-users-heading {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  .registered-users-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .registered-user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .user-name {
+    margin-right: 10px;
+  }
+  
+  .add-friend-button {
+    background-color: #27ae60;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  

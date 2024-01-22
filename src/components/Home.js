@@ -1,6 +1,5 @@
-// HomePage.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -13,6 +12,7 @@ import './Home.css';
 const HomePage = () => {
   const [searchCity, setSearchCity] = useState('');
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate(); // Import useNavigate hook
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +36,12 @@ const HomePage = () => {
       : events
     : [];
 
+  // Function to handle card click and navigate to registration page
+  const handleCardClick = (eventId) => {
+    // console.log(eventId);
+    navigate(`/registration/${eventId}`);
+  };
+
   return (
     <Container>
       <TextField
@@ -49,32 +55,38 @@ const HomePage = () => {
 
       <Grid container spacing={3}>
         {filteredEvents.map((event) => (
-          <Grid item key={event.id} xs={12} sm={6} md={4} lg={3}>
-            <Card className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s' }}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={`${event.eventurl}`}
-                style={{ objectFit: 'cover' }} // Maintain aspect ratio
-              />
-              <CardContent style={{ flexGrow: 1 }}>
-                <Typography variant="h6" component="div">
-                  {event?.eventname}
-                </Typography>
-                <Typography variant="body1" color="textSecondary" paragraph>
-                  {event?.city}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                  {event?.eventdescription}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" paragraph>
-                  {event?.description}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {new Date(event?.eventdate).toLocaleString()}
-                </Typography>
-              </CardContent>
-            </Card>
+          <Grid item key={event?.eventid} xs={12} sm={6} md={4} lg={3}>
+            {event?.eventid !== undefined && (
+              <Card
+                className="card"
+                style={{ height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s' }}
+                onClick={() => handleCardClick(event?.eventid)} // Call handleCardClick on card click
+              >
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={`${event.eventurl}`}
+                  style={{ objectFit: 'cover' }}
+                />
+                <CardContent style={{ flexGrow: 1 }}>
+                  <Typography variant="h6" component="div">
+                    {event?.eventname}
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary" paragraph>
+                    {event?.city}
+                  </Typography>
+                  <Typography variant="subtitle1" color="textSecondary">
+                    {event?.eventdescription}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" paragraph>
+                    {event?.description}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {new Date(event?.eventdate).toLocaleString()}
+                  </Typography>
+                </CardContent>
+              </Card>
+            )}
           </Grid>
         ))}
       </Grid>
