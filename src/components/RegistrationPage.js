@@ -13,18 +13,19 @@ const RegistrationPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // console.log('Fetching event data...');
-        // console.log(eventId);
         const eventResponse = await fetch(`http://localhost:6001/api/events/${eventId}`);
         const eventData = await eventResponse.json();
-        // console.log('Event data:', eventData);
         setEventDetails(eventData);
 
-        // console.log('Fetching registered users...');
         const usersResponse = await fetch(`http://localhost:6001/api/events/participants/${eventId}`);
         const usersData = await usersResponse.json();
-        // console.log('Registered users:', usersData);
         setRegisteredUsers(usersData);
+
+        // Check local storage for registration status
+        const storedIsRegistered = localStorage.getItem(`eventRegistration_${eventId}`);
+        if (storedIsRegistered) {
+          setIsRegistered(true);
+        }
 
         setLoading(false);
       } catch (error) {
@@ -53,7 +54,7 @@ const RegistrationPage = () => {
       if (response.ok) {
         console.log('User registered successfully');
         setIsRegistered(true);
-        // You may want to update the user list here as well
+        localStorage.setItem(`eventRegistration_${eventId}`, 'true');
       } else {
         console.error('Failed to register user');
       }
@@ -80,8 +81,6 @@ const RegistrationPage = () => {
 
       if (response.ok) {
         console.log('Friend added successfully');
-        // Refetch the registered users or update the UI in some way
-        // For simplicity, refetching all users here, consider updating only the specific user
         const updatedUsersResponse = await fetch(`http://localhost:6001/api/events/participants/${eventId}`);
         const updatedUsersData = await updatedUsersResponse.json();
         setRegisteredUsers(updatedUsersData);
@@ -119,14 +118,16 @@ const RegistrationPage = () => {
         {registeredUsers.map((user) => (
           <li key={user.email} className="registered-user-item">
             <span className="user-name">{user.name}</span>
-            <button
-              className={`add-friend-button ${user.isFriend ? 'friend' : ''}`}
-              onClick={() => addFriend(user.userId)}
-              disabled={user.isFriend}
-            > 
-              {user.isFriend ? 'Friend' : 'Add Friend'}
-            </button>
-          </li>
+            {user.userId !== 1 && ( // Assuming 1 is the logged-in user ID
+                <button
+                className={`add-friend-button ${user.isFriend ? 'friend' : ''}`}
+                onClick={() => addFriend(user.userId)}
+                disabled={user.isFriend}
+                >
+                {user.isFriend ? 'Friend' : 'Add Friend'}
+                </button>
+            )}
+         </li>
         ))}
       </ul>
     </div>
