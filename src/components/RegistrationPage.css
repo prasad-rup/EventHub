@@ -37,6 +37,9 @@
     border-radius: 5px;
     cursor: pointer;
   }
+  .register-button.registered {
+    background-color: gray;
+  }
   
   .registered-users-heading {
     font-size: 18px;

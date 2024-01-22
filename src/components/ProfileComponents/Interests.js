@@ -1,23 +1,71 @@
-// Interests.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Interests.css';
 
+// Import statements...
+
 const Interests = () => {
-  // Sample interest data (replace this with actual data from your API)
-  const userInterests = ['Music', 'Sports', 'Art'];
+  const allInterests = [
+    'Business',
+    'Health',
+    'Home&Lifestyle',
+    'Travel&Outdoor',
+    'Music',
+    'Film&Media',
+    'Science&Tech',
+    'Food&Drink',
+    'Spirituality',
+    'Sports&Fitness',
+    'Fashion'
+  ];
 
   const [selectedInterest, setSelectedInterest] = useState('');
-  const [userInterestsList, setUserInterestsList] = useState(userInterests);
+  const [userInterestsList, setUserInterestsList] = useState([]);
 
-  const handleRemoveInterest = (interestToRemove) => {
-    const updatedInterests = userInterestsList.filter((interest) => interest !== interestToRemove);
-    setUserInterestsList(updatedInterests);
+  useEffect(() => {
+    const fetchUserInterests = async () => {
+      try {
+        const response = await fetch('http://localhost:6001/api/users/1/interests');
+        const data = await response.json();
+        setUserInterestsList(data.userInterests || []);
+      } catch (error) {
+        console.error('Error fetching user interests:', error);
+      }
+    };
+
+    fetchUserInterests();
+  }, []);
+
+  const handleRemoveInterest = async (interestToRemove) => {
+    try {
+      await fetch(`http://localhost:6001/api/users/1/remove-interest/${interestToRemove}`, {
+        method: 'PUT',
+      });
+
+      const updatedInterests = userInterestsList.filter((interest) => interest !== interestToRemove);
+      setUserInterestsList(updatedInterests);
+    } catch (error) {
+      console.error('Error removing interest:', error);
+    }
   };
 
-  const handleAddInterest = () => {
+  const handleAddInterest = async () => {
     if (selectedInterest && !userInterestsList.includes(selectedInterest)) {
-      setUserInterestsList((prevInterests) => [...prevInterests, selectedInterest]);
-      setSelectedInterest('');
+      try {
+        await fetch(`http://localhost:6001/api/users/1/interests`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            interest: selectedInterest,
+          }),
+        });
+
+        setUserInterestsList((prevInterests) => [...prevInterests, selectedInterest]);
+        setSelectedInterest('');
+      } catch (error) {
+        console.error('Error adding interest:', error);
+      }
     }
   };
 
@@ -39,8 +87,7 @@ const Interests = () => {
           <option value="" disabled>
             Select Interest
           </option>
-          {/* Add interest options dynamically */}
-          {userInterests.map((interest) => (
+          {allInterests.map((interest) => (
             <option key={interest} value={interest}>
               {interest}
             </option>
@@ -55,3 +102,5 @@ const Interests = () => {
 };
 
 export default Interests;
+
+

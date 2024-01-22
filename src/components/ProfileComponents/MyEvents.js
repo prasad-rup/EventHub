@@ -3,14 +3,14 @@ import './MyEvents.css';
 
 const MyEvents = () => {
   const [registeredEvents, setRegisteredEvents] = useState([]);
-  const userId = 1; // Replace with the actual logged-in user ID
+  const userId = 1; 
 
   useEffect(() => {
     const fetchRegisteredEvents = async () => {
       try {
         const response = await fetch(`http://localhost:6001/api/events/registered/${userId}`);
         const userData = await response.json();
-        console.log(userData); // Check the structure of the received data
+        console.log(userData); 
         // Extract registered events from user data
         setRegisteredEvents(userData || []);
       } catch (error) {

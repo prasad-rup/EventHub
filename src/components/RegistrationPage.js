@@ -108,9 +108,13 @@ const RegistrationPage = () => {
         <p className="event-city">{eventDetails.city}</p>
         <p className="event-description">{eventDetails.eventdescription}</p>
         <p className="event-description">{new Date(eventDetails.eventdate).toLocaleString()}</p>
-        <button className="register-button" onClick={handleRegister} disabled={isRegistered}>
+        <button
+          className={`register-button ${isRegistered ? 'registered' : ''}`}
+          onClick={handleRegister}
+          disabled={isRegistered}>
           {isRegistered ? 'Registered' : 'Register'}
         </button>
+
       </div>
 
       <h3 className="registered-users-heading">Registered Users:</h3>
