@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -31,7 +32,7 @@ const Login = () => {
         console.log('Login successful!');
         // login();
         localStorage.setItem("user",JSON.stringify(data.user));
-        console.log(data);
+        // console.log(data);
         navigate('/');
         // Redirect to home page or perform other actions
       } else {
@@ -51,24 +52,28 @@ const Login = () => {
 
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p>{error}</p>}
-      <form>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
-        <br />
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </form>
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>}
+        <form>
+          <div className="label-container">
+            <label>Email:</label>
+          </div>
+          <div className="input-container">
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="label-container">
+            <label>Password:</label>
+          </div>
+          <div className="input-container">
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <button type="button" onClick={handleLogin} className="login-button">
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

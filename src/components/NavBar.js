@@ -10,10 +10,11 @@ const NavBar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
-  }
+  };
+  
 
   return (
     <nav className="navbar">
@@ -40,7 +41,7 @@ const NavBar = () => {
               <Link to="/profile">Profile</Link>
             </li>
             <li>
-              <Link onClick={handleLogout}>Logout</Link>
+              <Link to="/login" onClick={handleLogout}>Logout</Link>
             </li>
           </>
         )}

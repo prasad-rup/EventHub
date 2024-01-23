@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import './SignUp.css';
 
 
 const Signup = () => {
@@ -53,34 +53,40 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      {error && <p>{error}</p>}
-      <form>
-        <label>
-          First Name:
-          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Last Name:
-          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
-        <br />
-        <button type="button" onClick={handleSignup}>
-          Signup
-        </button>
-      </form>
+    <div className="signup-container">
+      <div className="signup-card">
+        <h2>Signup</h2>
+        {error && <p className="error-message">{error}</p>}
+        <form>
+          <div className="label-container">
+            <label>First Name:</label>
+          </div>
+          <div className="input-container">
+            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          </div>
+          <div className="label-container">
+            <label>Last Name:</label>
+          </div>
+          <div className="input-container">
+            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          </div>
+          <div className="label-container">
+            <label>Email:</label>
+          </div>
+          <div className="input-container">
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="label-container">
+            <label>Password:</label>
+          </div>
+          <div className="input-container">
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <button type="button" onClick={handleSignup} className="signup-button">
+            Signup
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

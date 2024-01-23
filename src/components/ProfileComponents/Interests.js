@@ -22,7 +22,7 @@ const Interests = () => {
   useEffect(() => {
     const fetchUserInterests = async () => {
       try {
-        const response = await fetch('http://localhost:6001/api/users/1/interests');
+        const response = await fetch('http://localhost:6001/api/users/interests/1');
         const data = await response.json();
         setUserInterestsList(data.userInterests || []);
       } catch (error) {

@@ -12,7 +12,7 @@ const Explore = () => {
         const interestsResponse = await fetch(`http://localhost:6001/api/users/${loggedInUserId}/interests`);
         const userInterests = await interestsResponse.json();
         // Fetch users who have at least one similar interest
-        const similarInterestsResponse = await fetch(`http://localhost:6001/api/users/explore`, {
+        const similarInterestsResponse = await fetch(`http://localhost:6001/api/explore`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
