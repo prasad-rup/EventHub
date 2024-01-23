@@ -20,15 +20,19 @@
 
 .user-info {
   background-color: #f0f0f0;
+  width: 650px;
   padding: 16px;
   border-radius: 8px;
+  margin-top: 16px;
   margin-bottom: 20px;
 }
 
 .welcome-text {
   color: #333;
+  text-align: center;
 }
 
 .email-text {
   color: #555;
+  text-align: center;
 }
