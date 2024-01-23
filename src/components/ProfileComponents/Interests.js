@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Interests.css';
 
-// Import statements...
-
 const Interests = () => {
   const allInterests = [
     'Business',
@@ -102,5 +100,3 @@ const Interests = () => {
 };
 
 export default Interests;
-
-

@@ -53,14 +53,22 @@ const HomePage = () => {
         style={{ marginBottom: '16px', marginTop: '16px' }}
       />
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} style={{ display: 'flex', flexWrap: 'wrap' }}>
         {filteredEvents.map((event) => (
           <Grid item key={event?.eventid} xs={12} sm={6} md={4} lg={3}>
             {event?.eventid !== undefined && (
               <Card
                 className="card"
-                style={{ height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s' }}
-                onClick={() => handleCardClick(event?.eventid)} // Call handleCardClick on card click
+                style={{
+                  height: '90%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.3s',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                }}
+                onClick={() => handleCardClick(event?.eventid)}
               >
                 <CardMedia
                   component="img"
@@ -68,7 +76,7 @@ const HomePage = () => {
                   image={`${event.eventurl}`}
                   style={{ objectFit: 'cover' }}
                 />
-                <CardContent style={{ flexGrow: 1 }}>
+                <CardContent style={{ flexGrow: 1, padding: '16px' }}>
                   <Typography variant="h6" component="div">
                     {event?.eventname}
                   </Typography>
