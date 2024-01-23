@@ -10,10 +10,14 @@ const RegistrationPage = () => {
   const [isRegistered, setIsRegistered] = useState(false);
   const { eventId } = useParams();
 
+  const userData = localStorage.getItem('user');
+  const user = userData ? JSON.parse(userData) : null;
+  const loggedUserId = user ? user.userid : null;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const eventResponse = await fetch(`http://localhost:6001/api/events/${eventId}`);
+        const eventResponse = await fetch(`http://localhost:6001/api/events/details/${eventId}`);
         const eventData = await eventResponse.json();
         setEventDetails(eventData);
 
@@ -46,7 +50,7 @@ const RegistrationPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userid: 1, // Replace 1 with the actual logged-in user ID
+          userid: loggedUserId, 
           eventid: eventId,
         }),
       });
@@ -73,7 +77,7 @@ const RegistrationPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userid: 1, 
+          userid: loggedUserId, 
           eventid: eventId,
           friendUserIds: [friendId],
         }),
@@ -122,7 +126,7 @@ const RegistrationPage = () => {
         {registeredUsers.map((user) => (
           <li key={user.email} className="registered-user-item">
             <span className="user-name">{user.name}</span>
-            {user.userId !== 1 && ( // Assuming 1 is the logged-in user ID
+            {user.userId !== loggedUserId && (
                 <button
                 className={`add-friend-button ${user.isFriend ? 'friend' : ''}`}
                 onClick={() => addFriend(user.userId)}

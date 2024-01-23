@@ -5,7 +5,7 @@ import './DeleteUser.css';
 const DeleteUser = ({ onDeleteUser, userId }) => {
   const handleDeleteUser = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
+      const response = await fetch(`http://localhost:6001/api/users/delete-user/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -3,7 +3,9 @@ import './MyEvents.css';
 
 const MyEvents = () => {
   const [registeredEvents, setRegisteredEvents] = useState([]);
-  const userId = 1; 
+  const userData = localStorage.getItem('user');
+  const user = userData ? JSON.parse(userData) : null;
+  const userId = user ? user.userid : null;
 
   useEffect(() => {
     const fetchRegisteredEvents = async () => {

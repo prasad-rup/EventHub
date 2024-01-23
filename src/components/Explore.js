@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './Explore.css';
 const Explore = () => {
   const [usersWithSimilarInterests, setUsersWithSimilarInterests] = useState([]);
-  const loggedInUserId = 4; // Replace with the actual logged-in user ID
+  const userData = localStorage.getItem('user');
+  const user = userData ? JSON.parse(userData) : null;
+  const loggedInUserId = user ? user.userid : null;
+  
   useEffect(() => {
     const fetchUsersWithSimilarInterests = async () => {
       try {

@@ -18,7 +18,7 @@ const AccountSettings = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:6001/api/users/${userId}/change-password`, {
+      const response = await fetch(`http://localhost:6001/api/users/change-password/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

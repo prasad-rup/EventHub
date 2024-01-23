@@ -19,7 +19,7 @@ const HomePage = () => {
       try {
         const response = await fetch("http://localhost:6001/api/events/all");
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         setEvents(data);
       } catch (error) {
         console.error('Error fetching data:', error);

@@ -16,7 +16,7 @@ const Signup = () => {
   const handleSignup = async () => {
     try {
       // Perform API call to store user information in the database
-      const response = await fetch('http://localhost:3000/api/signup', {
+      const response = await fetch('http://localhost:6001/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const Signup = () => {
   
         if (data.success) {
           console.log('Signup successful!');
-          navigate('/');
+          navigate('/login');
           // Redirect to home page or perform other actions
         } else {
           console.error('Invalid credentials.');

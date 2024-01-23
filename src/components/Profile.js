@@ -1,6 +1,7 @@
 // Profile.js
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MyEvents from './ProfileComponents/MyEvents';
 import Interests from './ProfileComponents/Interests';
 import AccountSettings from './ProfileComponents/AccountSettings';
@@ -9,6 +10,12 @@ import './Profile.css';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+  const [userDeleted, setUserDeleted] = useState(false);
+  const navigate = useNavigate();
+
+  const userData = localStorage.getItem('user');
+  const getUserId = userData ? JSON.parse(userData) : null;
+  const userId = getUserId ? getUserId.userid : null;
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -16,6 +23,13 @@ const Profile = () => {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+
+  const handleDeleteUser = () => {
+    setUserDeleted(true);
+    localStorage.clear();
+    navigate("/signup");
+  };
 
   return (
     <div className="profile-container">
@@ -26,7 +40,7 @@ const Profile = () => {
       <MyEvents />
       <Interests />
       <AccountSettings />
-      <DeleteUser />
+      {!userDeleted && <DeleteUser to="/login" onDeleteUser={handleDeleteUser} userId={`${userId}`} />}
     </div>
   );
 };
