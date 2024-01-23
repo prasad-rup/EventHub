@@ -5,14 +5,40 @@ import './AccountSettings.css';
 const AccountSettings = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleChangePassword = () => {
-    // Add your logic to handle password change
-    console.log('Changing password:', currentPassword, newPassword);
-    // You may want to make an API call to update the password
-    // Reset the input fields after updating the password
-    setCurrentPassword('');
-    setNewPassword('');
+  const userData = localStorage.getItem('user');
+  const user = userData ? JSON.parse(userData) : null;
+  const userId = user ? user.userid : null;
+
+  const handleChangePassword = async () => {
+    if (!userId) {
+      console.error('User ID not found.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:6001/api/users/${userId}/change-password`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMessage(data.message);
+      } else {
+        const data = await response.json();
+        setMessage(data.message);
+      }
+    } catch (error) {
+      console.error('Error changing password:', error);
+    }
   };
 
   return (
@@ -39,6 +65,7 @@ const AccountSettings = () => {
         <button onClick={handleChangePassword} className="change-password-button">
           Change Password
         </button>
+        {message && <p className="password-change-message">{message}</p>}
       </div>
     </div>
   );
