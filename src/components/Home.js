@@ -12,22 +12,63 @@ import './Home.css';
 const HomePage = () => {
   const [searchCity, setSearchCity] = useState('');
   const [events, setEvents] = useState([]);
-  const navigate = useNavigate(); // Import useNavigate hook
+  const [userInterests, setUserInterests] = useState([]);
+  const navigate = useNavigate(); 
+
+  const userData = localStorage.getItem('user');
+  const user = userData ? JSON.parse(userData) : null;
+  const userId = user ? user.userid : null;
 
   useEffect(() => {
-    const fetchData = async () => {
+    // Fetch logged-in user's interests
+    const fetchUserInterests = async () => {
       try {
-        const response = await fetch("http://localhost:6001/api/events/all");
+        const response = await fetch(`http://localhost:6001/api/users/getall-interest/${userId}`);
         const data = await response.json();
-        // console.log(data);
-        setEvents(data);
+        console.log(data);
+        if (Array.isArray(data)) {
+          // Update userInterests with user's interests
+          setUserInterests(data.map((interest) => interest.interestid));
+        } else {
+          console.error(`Invalid response format from /api/users/getall-interest/${userId}:`, data);
+        }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching user interests:', error);
       }
     };
 
-    fetchData();
-  }, []);
+    fetchUserInterests();
+  }, []); // Fetch user interests on component mount
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        // If the user has interests, fetch events for each interest
+        // console.log("UserInterest : ", userInterests);
+        if (userInterests.length > 0) {
+          const eventsPromises = userInterests.map(async (interestId) => {
+            const response = await fetch(`http://localhost:6001/api/events/by-interest/${interestId}`);
+            const data = await response.json();
+            return data;
+          });
+
+          const eventsData = await Promise.all(eventsPromises);
+          // Combine events from different interests into a single array
+          const combinedEvents = eventsData.reduce((acc, curr) => [...acc, ...curr], []);
+          setEvents(combinedEvents);
+        } else {
+          // If the user has no interests, fetch all events
+          const response = await fetch('http://localhost:6001/api/events/all');
+          const data = await response.json();
+          setEvents(data);
+        }
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+
+    fetchEvents();
+  }, [userInterests]); // Fetch events whenever userInterests change
 
   // Filter events based on the entered city
   const filteredEvents = Array.isArray(events)

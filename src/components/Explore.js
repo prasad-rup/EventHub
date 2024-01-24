@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Explore.css';
 const Explore = () => {
   const [usersWithSimilarInterests, setUsersWithSimilarInterests] = useState([]);
+
   const userData = localStorage.getItem('user');
   const user = userData ? JSON.parse(userData) : null;
   const loggedInUserId = user ? user.userid : null;
@@ -10,7 +11,8 @@ const Explore = () => {
     const fetchUsersWithSimilarInterests = async () => {
       try {
         // Fetch users who have at least one similar interest
-        const similarInterestsResponse = await fetch(`http://localhost:3000/api/explore?userId=${loggedInUserId}`);
+        // console.log(loggedInUserId);
+        const similarInterestsResponse = await fetch(`http://localhost:6001/api/explore?userId=${loggedInUserId}`);
         if (!similarInterestsResponse.ok) {
           throw new Error(`HTTP error! Status: ${similarInterestsResponse.status}`);
         }
@@ -18,7 +20,6 @@ const Explore = () => {
         setUsersWithSimilarInterests(usersWithSimilarInterests);
       } catch (error) {
         console.error('Error fetching users with similar interests:', error);
-        // Handle the error, e.g., set an error state
       }
     };
     fetchUsersWithSimilarInterests();

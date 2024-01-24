@@ -21,7 +21,7 @@ const RegistrationPage = () => {
         const eventData = await eventResponse.json();
         setEventDetails(eventData);
 
-        const usersResponse = await fetch(`http://localhost:6001/api/events/participants/${eventId}`);
+        const usersResponse = await fetch(`http://localhost:6001/api/events/participants/${eventId}/${loggedUserId}`);
         const usersData = await usersResponse.json();
         setRegisteredUsers(usersData);
 
@@ -69,32 +69,35 @@ const RegistrationPage = () => {
 
 
   const addFriend = async (friendId) => {
-    try {
-      // Placeholder for adding friend logic (replace with actual logic)
-      const response = await fetch(`http://localhost:6001/api/events/add-friends`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userid: loggedUserId, 
-          eventid: eventId,
-          friendUserIds: [friendId],
-        }),
-      });
+  try {
+    const response = await fetch('http://localhost:6001/api/events/add-friends', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userid: loggedUserId, 
+        eventid: eventId,
+        friendUserIds: [friendId],
+      }),
+    });
 
-      if (response.ok) {
-        console.log('Friend added successfully');
-        const updatedUsersResponse = await fetch(`http://localhost:6001/api/events/participants/${eventId}`);
-        const updatedUsersData = await updatedUsersResponse.json();
-        setRegisteredUsers(updatedUsersData);
-      } else {
-        console.error('Failed to add friend');
-      }
-    } catch (error) {
-      console.error('Error adding friend:', error);
+    if (response.ok) {
+      console.log('Friend added successfully');
+
+      // Fetch updated user data after adding friends
+      const updatedUsersResponse = await fetch(`http://localhost:6001/api/events/participants/${eventId}/${loggedUserId}`);
+      const updatedUsersData = await updatedUsersResponse.json();
+      
+      // Update the state with the newly fetched data
+      setRegisteredUsers(updatedUsersData);
+    } else {
+      console.error('Failed to add friend');
     }
-  };
+  } catch (error) {
+    console.error('Error adding friend:', error);
+  }
+};
 
   if (loading) {
     return <div>Loading...</div>;
@@ -126,10 +129,10 @@ const RegistrationPage = () => {
         {registeredUsers.map((user) => (
           <li key={user.email} className="registered-user-item">
             <span className="user-name">{user.name}</span>
-            {user.userId !== loggedUserId && (
+            {user.id !== loggedUserId && (
                 <button
                 className={`add-friend-button ${user.isFriend ? 'friend' : ''}`}
-                onClick={() => addFriend(user.userId)}
+                onClick={() => addFriend(user.id)}
                 disabled={user.isFriend}
                 >
                 {user.isFriend ? 'Friend' : 'Add Friend'}
