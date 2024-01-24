@@ -33,7 +33,7 @@ const Login = () => {
         // login();
         localStorage.setItem("user",JSON.stringify(data.user));
         // console.log(data);
-        navigate('/');
+        navigate('/home');
         // Redirect to home page or perform other actions
       } else {
         console.error('Invalid credentials.');

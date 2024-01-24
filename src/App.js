@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Explore from './components/Explore';
 import Profile from './components/Profile';
-import EntryPage from './components/EntryPage.js';
+import WelcomePage from './components/WelcomePage.js';
 import Signup from './components/SignUp';
 import Login from './components/Login'; // Import the new component
 import NavBar from './components/NavBar';
@@ -25,10 +25,10 @@ const App = () => {
           </header>
           <main>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<WelcomePage />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/entry" element={<EntryPage />} />
               <Route path="/registration/:eventId" element={<EventRegistrationPage />} />
 
               <Route path="/signup" element={<Signup/>} />

@@ -36,7 +36,6 @@ const Signup = () => {
         if (data.success) {
           console.log('Signup successful!');
           navigate('/login');
-          // Redirect to home page or perform other actions
         } else {
           console.error('Invalid credentials.');
           setError(data.message || 'Invalid details.');

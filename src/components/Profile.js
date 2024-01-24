@@ -28,7 +28,7 @@ const Profile = () => {
   const handleDeleteUser = () => {
     setUserDeleted(true);
     localStorage.clear();
-    navigate("/signup");
+    navigate("/");
   };
 
   return (
