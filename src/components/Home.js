@@ -94,14 +94,14 @@ const HomePage = () => {
         style={{ marginBottom: '16px', marginTop: '16px' }}
       />
 
-      <Grid container spacing={3} style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <Grid container spacing={3}>
         {filteredEvents.map((event) => (
           <Grid item key={event?.eventid} xs={12} sm={6} md={4} lg={3}>
             {event?.eventid !== undefined && (
               <Card
                 className="card"
                 style={{
-                  height: '90%',
+                  height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
                   transition: 'transform 0.3s',

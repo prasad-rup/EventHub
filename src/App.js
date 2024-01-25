@@ -7,10 +7,10 @@ import Explore from './components/Explore';
 import Profile from './components/Profile';
 import WelcomePage from './components/WelcomePage.js';
 import Signup from './components/SignUp';
-import Login from './components/Login'; // Import the new component
+import Login from './components/Login'; 
 import NavBar from './components/NavBar';
 import EventRegistrationPage from './components/RegistrationPage';
-import { AuthProvider } from './Contexts/AuthContext'; // Assuming you have an AuthContext
+import { AuthProvider } from './Contexts/AuthContext'; 
 import './App.css';
 const App = () => {
   return (

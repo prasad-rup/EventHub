@@ -11,7 +11,8 @@ const Login = () => {
   const { login } = useAuth();
   const handleLogin = async () => {
     try {
-      // Perform API call to check user credentials
+
+      // API call to check user credentials
       const response = await fetch('http://localhost:6001/api/login', {
         method: 'POST',
         headers: {
@@ -30,11 +31,9 @@ const Login = () => {
 
       if (data.success) {
         console.log('Login successful!');
-        // login();
         localStorage.setItem("user",JSON.stringify(data.user));
-        // console.log(data);
-        navigate('/home');
         // Redirect to home page or perform other actions
+        navigate('/home');
       } else {
         console.error('Invalid credentials.');
         setError(data.message || 'Invalid email or password.');
