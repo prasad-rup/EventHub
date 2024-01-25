@@ -14,7 +14,7 @@ const NavBar = () => {
   const currentPageUrl = location.pathname + location.search;
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/");
   };
   
 
